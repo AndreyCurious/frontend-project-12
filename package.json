@@ -1,0 +1,19 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "Social network for programmers",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreyCurious/frontend-project-12.git"
+  },
+  "author": "Andrey Didenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreyCurious/frontend-project-12/issues"
+  },
+  "homepage": "https://github.com/AndreyCurious/frontend-project-12#readme"
+}
