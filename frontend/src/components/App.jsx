@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './Login.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import NotFoundPage from './NotFoundPage.jsx';
 
 const App = () => (

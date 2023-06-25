@@ -1,5 +1,5 @@
 export default {
-  trnslation: {
+  translation: {
     login: {
       username: 'Ваш ник',
       password: 'Пароль',
@@ -8,6 +8,7 @@ export default {
       newToChat: 'Нет аккаунта?',
       authFailed: 'Неверные имя пользователя или пароль',
       header: 'Войти',
+      shemaRequired: 'Заполните все поля!',
     },
     notFound: {
       pageNotFound: 'Страница не найдена',
