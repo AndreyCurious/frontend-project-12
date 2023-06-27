@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import * as yup from 'yup';
+// import { useNavigate } from 'react-router-dom';
 import { redirect } from 'react-router-dom';
 
 const Form = () => {
@@ -19,11 +20,11 @@ const Form = () => {
       try {
         const response = await axios.post('api/v1/login', values);
         localStorage.setItem('token', response.data.token);
-      } catch (e) {
-        setUserAuth(true);
-      }
-      if (!userAuth) {
         return redirect('/');
+      } catch (e) {
+        if (e.response.status === 401) {
+          setUserAuth(true);
+        }
       }
       return null;
     },
@@ -69,6 +70,9 @@ const Form = () => {
       >
         {t('login.submit')}
       </button>
+      {userAuth
+        ? <h6 className="text-danger" title=""><strong>{t('login.authFailed')}</strong></h6>
+        : <div className="p-4" />}
     </form>
   );
 };
