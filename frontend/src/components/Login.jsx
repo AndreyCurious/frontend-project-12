@@ -1,11 +1,10 @@
 // import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Form from './form';
+import Form from './UI/form';
 
 const Login = () => {
   const { t } = useTranslation();
 
-  // const [userAuth, setUserAuth] = useState(false);
   return (
     <div className="container-fluid vh-100">
       <div className="row justify-content-center align-content-center h-100">
