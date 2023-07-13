@@ -15,5 +15,13 @@ export default {
       transition: 'Но вы можете перейти',
       mainPage: ' на главную страницу',
     },
+    chatPage: {
+      channels: 'Каналы',
+      inputMessage: 'Введите сообщение...',
+    },
+    modal: {
+      addChannel: 'Добавить канал',
+      channelName: 'Имя канала',
+    },
   },
 };

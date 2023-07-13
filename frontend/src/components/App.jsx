@@ -9,7 +9,7 @@ import React, { useState, useMemo } from 'react';
 import Login from './Login.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NotFoundPage from './NotFoundPage.jsx';
-import ChatPage from './ChatPage.jsx';
+import PageChat from './PageChat.jsx';
 
 import { AuthContext } from '../contexts/index.js';
 import useAuth from '../hooks/index.js';
@@ -47,14 +47,16 @@ const PrivateOutlet = () => {
 const App = () => (
   <AuthProvider>
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<NotFoundPage />} />
-        <Route path="/" element={<PrivateOutlet />}>
-          <Route path="" element={<ChatPage />} />
-        </Route>
-      </Routes>
+      <div className="d-flex flex-column bg-light vh-100">
+        <Navbar />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/" element={<PrivateOutlet />}>
+            <Route path="" element={<PageChat />} />
+          </Route>
+        </Routes>
+      </div>
     </BrowserRouter>
   </AuthProvider>
 );

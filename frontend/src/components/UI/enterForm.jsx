@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import useAuth from '../../hooks/index.js';
 import { useNavigate } from 'react-router-dom';
 
-const MyForm = () => {
+const EnterForm = () => {
   const auth = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -81,4 +81,4 @@ const MyForm = () => {
   );
 };
 
-export default MyForm;
+export default EnterForm;
