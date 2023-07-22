@@ -2,12 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import { ArrowRightCircleFill } from 'react-bootstrap-icons';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
+import { useRollbar } from '@rollbar/react';
+import leoProfanity from 'leo-profanity';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
 import dataProcessing from '../../API/socket.jsx';
 import useAuth from '../../hooks/index.js';
 
 const MessageForm = () => {
+  const rollbar = useRollbar();
   const currentChannelId = useSelector((state) => state.channelsData.currentChannelId);
   const auth = useAuth();
   const { t } = useTranslation();
@@ -17,11 +20,13 @@ const MessageForm = () => {
       message: '',
     },
     onSubmit: async (values) => {
+      const filtredMsg = leoProfanity.clean(values.message);
       try {
-        await dataProcessing('newMessage', { name: auth.user, msg: values.message, currentChannelId });
+        await dataProcessing('newMessage', { name: auth.user, msg: filtredMsg, currentChannelId });
         inputRef.current.focus();
         inputRef.current.value = '';
       } catch (err) {
+        rollbar.error(err);
         console.log(err);
       }
     },

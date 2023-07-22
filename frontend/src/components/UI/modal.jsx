@@ -1,46 +1,45 @@
-/* eslint-disable */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { Modal, Form } from 'react-bootstrap';
+import { Modal, Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { useRollbar } from '@rollbar/react';
 import { closeWindow } from '../../slices/modal';
 import dataProcessing from '../../API/socket.jsx';
-import { useTranslation } from 'react-i18next';
-import { removeAllChannels, setCurrenChannelId } from '../../slices/channels';
 
-const getValidationSchema = (channels) => {
-  return yup.object({
-    nameChannel: yup.string().trim().required().notOneOf(channels),
-  });
-};
+const getValidationSchema = (channels, t) => (
+  yup.object({
+    nameChannel: yup.string().trim().required(t('errors.required')).notOneOf(channels, t('errors.twiceChannels')),
+  })
+);
 
 const AddChannelForm = ({ closeModal }) => {
+  const rollbar = useRollbar();
   const inputRef = useRef(null);
   const channels = useSelector((state) => state.channelsData.channels);
-  // console.log(channels);
-  const dispatch = useDispatch();
+  const channelsNames = channels.map((channel) => channel.name);
   const { t } = useTranslation();
   const formik = useFormik({
     initialValues: {
       nameChannel: '',
     },
-    validationSchema: getValidationSchema(channels),
+    validationSchema: getValidationSchema(channelsNames, t),
     onSubmit: async (values) => {
-      try{
+      try {
         await dataProcessing('newChannel', { name: values.nameChannel });
         closeModal();
+        toast.success(t('toastify.createChannel'));
       } catch (err) {
-        console.log(err)
+        rollbar.error(err);
+        console.log(err);
       }
-    }
+    },
   });
-  // console.log(channels)
-  // dispatch(setCurrenChannelId({ channelId: newChannel.id }))
-
   useEffect(() => {
     inputRef.current.focus();
-  }, [])
+  }, []);
 
   return (
     <>
@@ -52,28 +51,169 @@ const AddChannelForm = ({ closeModal }) => {
           <Form.Group>
             <Form.Control
               ref={inputRef}
-              type='text'
+              type="text"
               placeholder={t('modal.channelName')}
               disabled={formik.isSubmitting}
               required
               onChange={formik.handleChange}
-              name='nameChannel'
+              name="nameChannel"
               value={formik.nameChannel}
+              isInvalid={!!formik.errors.nameChannel}
             />
+            <label className="visually-hidden" htmlFor="nameChannel">{t('modal.channelName')}</label>
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.nameChannel}
+            </Form.Control.Feedback>
+            <div className="d-flex justify-content-end mt-3">
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={closeModal}
+                className="me-2"
+              >
+                {t('modal.close')}
+              </Button>
+              <Button
+                variant="primary"
+                type="submit"
+                disabled={formik.isSubmitting}
+              >
+                {t('modal.add')}
+              </Button>
+            </div>
           </Form.Group>
         </Form>
       </Modal.Body>
-      <Modal.Footer></Modal.Footer>
     </>
-  )
+  );
+};
+
+const RemoveChannelForm = ({ closeModal }) => {
+  const rollbar = useRollbar();
+  const { t } = useTranslation();
+  const id = useSelector((state) => state.modalData.channelId);
+  const removeChannel = async () => {
+    try {
+      dataProcessing('removeChannel', { id });
+      closeModal();
+      toast.success(t('toastify.deleteChannel'));
+    } catch (err) {
+      rollbar.error(err);
+      console.log(err);
+    }
+  };
+  return (
+    <>
+      <Modal.Header>
+        <Modal.Title>{t('modal.removeChannel')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {t('modal.removeQuestion')}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          variant="secondary"
+          type="button"
+          onClick={closeModal}
+          className="me-2"
+        >
+          {t('modal.close')}
+        </Button>
+        <Button
+          variant="danger"
+          type="button"
+          onClick={() => removeChannel()}
+        >
+          {t('modal.remove')}
+        </Button>
+      </Modal.Footer>
+    </>
+  );
+};
+
+const RenameChannelForm = ({ closeModal }) => {
+  const rollbar = useRollbar();
+  const inputRef = useRef(null);
+  const id = useSelector((state) => state.modalData.channelId);
+  const channels = useSelector((state) => state.channelsData.channels);
+  const channelsNames = channels.map((channel) => channel.name);
+  const { t } = useTranslation();
+  const formik = useFormik({
+    initialValues: {
+      nameChannel: '',
+    },
+    validationSchema: getValidationSchema(channelsNames, t),
+    onSubmit: async (values) => {
+      try {
+        await dataProcessing('renameChannel', { name: values.nameChannel, id });
+        closeModal();
+        toast.success(t('toastify.renameChannel'));
+      } catch (err) {
+        rollbar.error(err);
+        console.log(err);
+      }
+    },
+  });
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  return (
+    <>
+      <Modal.Header>
+        <Modal.Title>{t('modal.rename')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Group>
+            <Form.Control
+              ref={inputRef}
+              type="text"
+              placeholder={t('modal.channelName')}
+              disabled={formik.isSubmitting}
+              required
+              onChange={formik.handleChange}
+              name="nameChannel"
+              value={formik.nameChannel}
+              isInvalid={!!formik.errors.nameChannel}
+            />
+            <label className="visually-hidden" htmlFor="nameChannel">{t('modal.channelName')}</label>
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.nameChannel}
+            </Form.Control.Feedback>
+            <div className="d-flex justify-content-end mt-3">
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={closeModal}
+                className="me-2"
+              >
+                {t('modal.close')}
+              </Button>
+              <Button
+                variant="primary"
+                type="submit"
+                disabled={formik.isSubmitting}
+              >
+                {t('modal.add')}
+              </Button>
+            </div>
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+    </>
+  );
 };
 
 const MyModal = () => {
   const mapping = {
-    AddChannelForm: AddChannelForm,
-  }
+    addChannelForm: AddChannelForm,
+    removeChannelForm: RemoveChannelForm,
+    renameChannelForm: RenameChannelForm,
+  };
   const dispatch = useDispatch();
-  
+
   const closeModal = () => {
     dispatch(closeWindow());
   };
@@ -87,6 +227,6 @@ const MyModal = () => {
       { SelectModal ? <SelectModal closeModal={closeModal} /> : null }
     </Modal>
   );
-}
+};
 
 export default MyModal;

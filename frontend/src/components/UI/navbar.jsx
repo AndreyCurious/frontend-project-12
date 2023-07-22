@@ -1,7 +1,11 @@
 /* eslint-disable */
 import React from 'react';
+import useAuth from '../../hooks';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
+  const { t } = useTranslation();
+  const auth = useAuth();
   return (
     <nav className="navbar navbar-light bg-white border-bottom border-primary">
       <div className='container'>
@@ -9,7 +13,8 @@ const Navbar = () => {
           <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/DC_Comics_logo.svg" alt="logo" width="30" height="30" className='d-inline-blick align-top'/>
           {' '}
           Digital Chat
-      </a>
+        </a>
+        {auth.user ? <button onClick={auth.logOut} className='btn btn-primary'>{t('login.logout')}</button> : null}
       </div>
     </nav>
   );

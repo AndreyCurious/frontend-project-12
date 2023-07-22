@@ -1,34 +1,40 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { setCurrenChannelId } from '../../slices/channels';
+import { openWindow } from '../../slices/modal';
 
 const Channel = ({ channel, currentChannelId }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   return (
     <li className="list-group-item" key={channel.id}>
       {channel.removable
         ? (
-          <div class="btn-group">
-            <button type="button" class="btn btn-danger">Action</button>
-            <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
-            </div>
-          </div>
-          )
-        : ( <button type="button" onClick={() => dispatch(setCurrenChannelId({ channelId: channel.id }))} className={channel.id === currentChannelId ? 'btn w-100 text-start rounded-0 btn-secondary' : 'btn w-100 text-start rounded-0'}>
+          <Dropdown className="w-100" as={ButtonGroup}>
+            <Button
+              className={channel.id === currentChannelId ? 'btn w-100 text-start rounded-0 btn-secondary' : 'btn w-100 text-start rounded-0'}
+              key={channel.id}
+              variant={null}
+              onClick={() => dispatch(setCurrenChannelId({ channelId: channel.id }))}
+            >
+              {`# ${channel.name}`}
+            </Button>
+            <Dropdown.Toggle split variant={null} className={channel.id === currentChannelId ? 'rounded-0 btn-secondary' : 'rounded-0'} />
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => dispatch(openWindow({ typeOfForm: 'renameChannelForm', channelId: channel.id }))}>{t('dropMenu.rename')}</Dropdown.Item>
+              <Dropdown.Item onClick={() => dispatch(openWindow({ typeOfForm: 'removeChannelForm', channelId: channel.id }))}>{t('dropMenu.delete')}</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        )
+        : (
+          <button type="button" onClick={() => dispatch(setCurrenChannelId({ channelId: channel.id }))} className={channel.id === currentChannelId ? 'btn w-100 text-start rounded-0 btn-secondary' : 'btn w-100 text-start rounded-0'}>
             {`# ${channel.name}`}
-            </button>
-          )
-      }
+          </button>
+        )}
     </li>
-  )
+  );
 };
 
 export default Channel;

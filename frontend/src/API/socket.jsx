@@ -1,7 +1,12 @@
 import { io } from 'socket.io-client';
 import store from '../slices/index.js';
 import { addMessage } from '../slices/messages';
-import { addChannel, removeChannel, renameChannel } from '../slices/channels.jsx';
+import {
+  addChannel,
+  removeChannel,
+  renameChannel,
+  setCurrenChannelId,
+} from '../slices/channels.jsx';
 
 const socket = io();
 
@@ -11,9 +16,12 @@ socket.on('newMessage', (response) => {
   }));
 });
 
-socket.on('addChannel', (response) => {
+socket.on('newChannel', (response) => {
   store.dispatch(addChannel({
     channel: response,
+  }));
+  store.dispatch(setCurrenChannelId({
+    channelId: response.id,
   }));
 });
 

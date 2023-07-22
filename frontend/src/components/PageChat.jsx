@@ -11,13 +11,15 @@ import ChatList from './UI/chatList';
 import AddChannelButton from './UI/addChannelBtn';
 import Modal from './UI/modal';
 
-const Message = ({ name, msg }) => (
+const Message = ({ name, msg }) => {
+  return (
     <div className="text-break mb-2">
-    <b>{name}</b>
-    {': '}
-    {msg}
-  </div>
-);
+      <b>{name}</b>
+      {': '}
+      {msg}
+    </div>
+  );
+};
 
 const PageChat = () => {
   const { t } = useTranslation();
@@ -47,6 +49,7 @@ const PageChat = () => {
     const result = messages.filter((message) => Number(message.currentChannelId) === Number(currentChannelId));
     return result;
   })
+  
   /* eslint-enable */
   return (
     <>

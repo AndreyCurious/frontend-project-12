@@ -1,21 +1,16 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCurrenChannelId } from '../../slices/channels';
+import { useSelector } from 'react-redux';
+import Channel from './channel';
 
 const ChatList = () => {
-  const dispatch = useDispatch();
   const channels = useSelector((state) => state.channelsData.channels);
   const currentChannelId = useSelector((state) => state.channelsData.currentChannelId);
-  console.log(channels);
+  console.log(useSelector((state) => state));
 
   return (
     <ul className="p-2 pb-0 mb-0 overflow-auto">
       {channels.map((channel) => (
-        <li className="list-group-item" key={channel.id}>
-          <button type="button" onClick={() => dispatch(setCurrenChannelId({ channelId: channel.id }))} className={channel.id === currentChannelId ? 'btn w-100 text-start rounded-0 btn-secondary' : 'btn w-100 text-start rounded-0'}>
-            {`# ${channel.name}`}
-          </button>
-        </li>
+        <Channel key={channel.id} channel={channel} currentChannelId={currentChannelId} />
       ))}
     </ul>
   );

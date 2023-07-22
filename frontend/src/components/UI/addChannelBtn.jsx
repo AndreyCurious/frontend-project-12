@@ -9,7 +9,7 @@ const AddChannelButton = () => {
     <button
       type="button"
       className="p-0 text-primary border-0 bg-white btn btn-group-vertical"
-      onClick={() => dispatch(openWindow({ typeOfForm: 'AddChannelForm' }))}
+      onClick={() => dispatch(openWindow({ typeOfForm: 'addChannelForm' }))}
     >
       <PlusSquare size={20} />
       <span className="visually-hidden">+</span>

@@ -2,12 +2,15 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react'
 import axios from 'axios';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 import useAuth from '../../hooks/index.js';
 import { useNavigate } from 'react-router-dom';
 
 const EnterForm = () => {
+  const rollbar = useRollbar();
   const auth = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -24,10 +27,11 @@ const EnterForm = () => {
         auth.logIn(response.data)
         return navigate('/');
       } catch (e) {
+        rollbar.error(e);
         if (e.response.status === 401) {
           setUserAuth(true);
         } else {
-          console.log(e);
+          toast.error(t('toastify.networkErr'))
         }
       }
       return null;

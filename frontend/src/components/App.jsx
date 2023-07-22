@@ -5,6 +5,8 @@ import {
   Navigate,
   Outlet,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import React, { useState, useMemo } from 'react';
 import Login from './Login.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,6 +16,7 @@ import PageChat from './PageChat.jsx';
 import { AuthContext } from '../contexts/index.js';
 import useAuth from '../hooks/index.js';
 import Navbar from './UI/navbar.jsx';
+import Signup from './SignUp.jsx';
 
 const AuthProvider = ({ children }) => {
   const userCurrent = localStorage.getItem('user');
@@ -22,7 +25,13 @@ const AuthProvider = ({ children }) => {
     const logIn = (registrationData) => {
       localStorage.setItem('user', registrationData.username);
       localStorage.setItem('token', registrationData.token);
-      setUser(registrationData);
+      setUser(registrationData.username);
+    };
+
+    const logOut = () => {
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      setUser(false);
     };
 
     const getAuthData = () => {
@@ -30,7 +39,12 @@ const AuthProvider = ({ children }) => {
       return userCurToken ? { Authorization: `Bearer ${userCurToken}` } : {};
     };
 
-    return { user, logIn, getAuthData };
+    return {
+      user,
+      logIn,
+      getAuthData,
+      logOut,
+    };
   }, [user]);
   return (
     <AuthContext.Provider value={props}>
@@ -52,11 +66,13 @@ const App = () => (
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<PrivateOutlet />}>
             <Route path="" element={<PageChat />} />
           </Route>
         </Routes>
       </div>
+      <ToastContainer />
     </BrowserRouter>
   </AuthProvider>
 );
