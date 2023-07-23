@@ -69,6 +69,7 @@ const EnterForm = () => {
           onChange={formik.handleChange}
           value={formik.values.password}
           placeholder={t('login.password')}
+          autoComplete="password"
         />
         <label className="form-label" htmlFor="password">{t('login.password')}</label>
       </div>
