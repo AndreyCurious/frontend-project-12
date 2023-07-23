@@ -19,6 +19,7 @@ export default {
     chatPage: {
       channels: 'Каналы',
       inputMessage: 'Введите сообщение...',
+      label: 'Новое сообщение'
     },
     modal: {
       addChannel: 'Добавить канал',
@@ -35,27 +36,28 @@ export default {
       twiceChannels: 'Канал с таким именем уже существует',
     },
     dropMenu: {
+      menu: 'Управление каналом',
       rename: 'Переименовать',
       delete: 'Удалить',
     },
     signUp: {
       registration: 'Регистрация',
-      minPass: 'Слишком короткий пароль',
-      minName: 'Слишком короткое имя',
-      maxName: 'Слишком длинное имя',
-      difPass: 'Пароли не совпадают',
-      username: 'Имя',
+      minPass: 'Не менее 6 символов',
+      minName: 'От 3 до 20 символов',
+      maxName: 'От 3 до 20 символов',
+      difPass: 'Пароли должны совпадать',
+      username: 'Имя рользователя',
       password: 'Пароль',
-      confirmPassword: 'Повторите пароль',
+      confirmPassword: 'Подтвердите пароль',
       submit: 'Зарегистирироваться',
       required: 'Заполните поле',
     },
     toastify: {
       unknowErr: 'Неизвестная ошибка!',
       networkErr: 'Ошибка сети! Попробуйте позже.',
-      createChannel: 'Канал создан!',
-      renameChannel: 'Канал переименован!',
-      deleteChannel: 'Канал удален!',
+      createChannel: 'Канал создан',
+      renameChannel: 'Канал переименован',
+      deleteChannel: 'Канал удален',
     },
   },
 };

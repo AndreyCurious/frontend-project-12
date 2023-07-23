@@ -21,7 +21,9 @@ const Channel = ({ channel, currentChannelId }) => {
             >
               {`# ${channel.name}`}
             </Button>
-            <Dropdown.Toggle split variant={null} className={channel.id === currentChannelId ? 'rounded-0 btn-secondary' : 'rounded-0'} />
+            <Dropdown.Toggle split variant={null} className={channel.id === currentChannelId ? 'rounded-0 btn-secondary' : 'rounded-0'}>
+              <span className="visually-hidden">{t('dropMenu.menu')}</span>
+            </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => dispatch(openWindow({ typeOfForm: 'renameChannelForm', channelId: channel.id }))}>{t('dropMenu.rename')}</Dropdown.Item>
               <Dropdown.Item onClick={() => dispatch(openWindow({ typeOfForm: 'removeChannelForm', channelId: channel.id }))}>{t('dropMenu.delete')}</Dropdown.Item>

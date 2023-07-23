@@ -70,7 +70,7 @@ const EnterForm = () => {
           value={formik.values.password}
           placeholder={t('login.password')}
         />
-        <label className="form-label" htmlFor="password">{t('login.password')}</label>
+        <label className="form-label" htmlFor="password">{t('chatPage.label')}</label>
       </div>
       <button
         type="submit"
