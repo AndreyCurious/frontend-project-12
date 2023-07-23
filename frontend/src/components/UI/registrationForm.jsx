@@ -45,25 +45,28 @@ const RegistrationForm = () => {
   return (
     <Form onSubmit={formik.handleSubmit} className='w-50 align-items-center d-flex flex-column'>
       <h1 className="text-center">{t('signUp.registration')}</h1>
-      <Form.Group className="m-2 position-relative">
+      <Form.Group className="m-2 position-relative form-floating">
         <Form.Control
           placeholder={t('signUp.username')}
+          id="username"
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
           required
+          autoComplete="username"
           onChange={formik.handleChange}
           name="username"
           value={formik.username}
           isInvalid={formik.touched.username && !!formik.errors.username}
         />
-        <label className="visually-hidden" htmlFor="username">{t('signUp.username')}</label>
+        <label htmlFor="username">{t('signUp.username')}</label>
         <Form.Control.Feedback tooltip type="invalid">
           {formik.errors.username}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="m-2 position-relative">
+      <Form.Group className="m-2 position-relative form-floating">
         <Form.Control
           type="password"
+          id='password'
           placeholder={t('signUp.password')}
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
@@ -73,14 +76,15 @@ const RegistrationForm = () => {
           value={formik.password}
           isInvalid={formik.touched.password && !!formik.errors.password}
         />
-        <label className="visually-hidden" htmlFor="password">{t('signUp.password')}</label>
+        <label htmlFor="password">{t('signUp.password')}</label>
         <Form.Control.Feedback tooltip type="invalid">
           {formik.errors.password}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="m-2 mb-4 position-relative">
+      <Form.Group className="m-2 mb-4 position-relative form-floating">
         <Form.Control
           type="password"
+          id='confirmPassword'
           placeholder={t('signUp.confirmPassword')}
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
@@ -90,7 +94,7 @@ const RegistrationForm = () => {
           value={formik.confirmPassword}
           isInvalid={!!formik.errors.confirmPassword && formik.touched.confirmPassword}
         />
-        <label className="visually-hidden" htmlFor="confirmPassword">{t('signUp.confirmPassword')}</label>
+        <label htmlFor="confirmPassword">{t('signUp.confirmPassword')}</label>
         <Form.Control.Feedback tooltip type="invalid">
           {formik.errors.confirmPassword}
         </Form.Control.Feedback>
