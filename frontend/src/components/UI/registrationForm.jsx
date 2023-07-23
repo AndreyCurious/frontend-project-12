@@ -47,7 +47,6 @@ const RegistrationForm = () => {
       <h1 className="text-center">{t('signUp.registration')}</h1>
       <Form.Group className="m-2 position-relative">
         <Form.Control
-          type="text"
           placeholder={t('signUp.username')}
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
@@ -57,10 +56,10 @@ const RegistrationForm = () => {
           value={formik.username}
           isInvalid={formik.touched.username && !!formik.errors.username}
         />
+        <label className="visually-hidden" htmlFor="username">{t('signUp.username')}</label>
         <Form.Control.Feedback tooltip type="invalid">
           {formik.errors.username}
         </Form.Control.Feedback>
-        <label className="visually-hidden" htmlFor="username">{t('signUp.username')}</label>
       </Form.Group>
       <Form.Group className="m-2 position-relative">
         <Form.Control
@@ -74,10 +73,10 @@ const RegistrationForm = () => {
           value={formik.password}
           isInvalid={formik.touched.password && !!formik.errors.password}
         />
+        <label className="visually-hidden" htmlFor="password">{t('signUp.password')}</label>
         <Form.Control.Feedback tooltip type="invalid">
           {formik.errors.password}
         </Form.Control.Feedback>
-        <label className="visually-hidden" htmlFor="password">{t('signUp.password')}</label>
       </Form.Group>
       <Form.Group className="m-2 mb-4 position-relative">
         <Form.Control
@@ -91,10 +90,10 @@ const RegistrationForm = () => {
           value={formik.confirmPassword}
           isInvalid={!!formik.errors.confirmPassword && formik.touched.confirmPassword}
         />
+        <label className="visually-hidden" htmlFor="confirmPassword">{t('signUp.confirmPassword')}</label>
         <Form.Control.Feedback tooltip type="invalid">
           {formik.errors.confirmPassword}
         </Form.Control.Feedback>
-        <label className="visually-hidden" htmlFor="confirmPassword">{t('signUp.confirmPassword')}</label>
       </Form.Group>
       <div>
         <Button variant='outline-primary' type="submit">{t('signUp.submit')}</Button>
