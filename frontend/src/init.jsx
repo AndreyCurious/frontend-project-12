@@ -1,6 +1,6 @@
 import React from 'react';
 import i18next from 'i18next';
-import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
+import { Provider as ProviderRollbar } from '@rollbar/react';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider } from 'react-redux';
 import Rollbar from 'rollbar';
@@ -13,7 +13,6 @@ const rollbarConfig = {
   environment: 'production',
 };
 const rollbar = new Rollbar(rollbarConfig);
-
 
 const init = async () => {
   const i18n = i18next.createInstance();
