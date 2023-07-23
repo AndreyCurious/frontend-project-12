@@ -19,7 +19,7 @@ export default {
     chatPage: {
       channels: 'Каналы',
       inputMessage: 'Введите сообщение...',
-      label: 'Новое сообщение'
+      label: 'Новое сообщение',
     },
     modal: {
       addChannel: 'Добавить канал',
