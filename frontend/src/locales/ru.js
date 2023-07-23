@@ -46,7 +46,7 @@ export default {
       minName: 'От 3 до 20 символов',
       maxName: 'От 3 до 20 символов',
       difPass: 'Пароли должны совпадать',
-      username: 'Имя рользователя',
+      username: 'Имя пользователя',
       password: 'Пароль',
       confirmPassword: 'Подтвердите пароль',
       submit: 'Зарегистирироваться',
