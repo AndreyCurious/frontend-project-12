@@ -58,7 +58,7 @@ const EnterForm = () => {
           placeholder={t('login.username')}
           autoComplete="username"
         />
-        <label htmlFor="password">{t('login.username')}</label>
+        <label className="form-label" htmlFor="username">{t('login.username')}</label>
       </div>
       <div className="form-floating">
         <input
