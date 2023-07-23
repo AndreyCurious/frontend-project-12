@@ -14,10 +14,6 @@ const rollbarConfig = {
 };
 const rollbar = new Rollbar(rollbarConfig);
 
-function TestError() {
-  const a = null;
-  return a.hello();
-}
 
 const init = async () => {
   const i18n = i18next.createInstance();
@@ -36,9 +32,6 @@ const init = async () => {
           <App />
         </I18nextProvider>
       </Provider>
-      <ErrorBoundary>
-        <TestError />
-      </ErrorBoundary>
     </ProviderRollbar>
   );
 };
