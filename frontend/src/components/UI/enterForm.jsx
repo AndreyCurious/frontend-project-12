@@ -49,13 +49,14 @@ const EnterForm = () => {
       <div className="form-floating">
         <input
           className="form-control mb-3 w-100 rounded border border-primary"
-          onChange={formik.handleChange}
           name="username"
           id="username"
-          autoComplete="username"
           required
+          type="text"
+          onChange={formik.handleChange}
           value={formik.values.username}
           placeholder={t('login.username')}
+          autoComplete="username"
         />
         <label htmlFor="password">{t('login.username')}</label>
       </div>
