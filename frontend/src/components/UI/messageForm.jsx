@@ -49,6 +49,7 @@ const MessageForm = () => {
               name="message"
               required
               placeholder={t('chatPage.inputMessage')}
+              aria-label={t('chatPage.newMessage')}
               disabled={formik.isSubmitting}
               className="border-0 p-0 ps-2 form-control"
               onChange={formik.handleChange}
