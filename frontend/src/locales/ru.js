@@ -19,6 +19,7 @@ export default {
     chatPage: {
       channels: 'Каналы',
       inputMessage: 'Введите сообщение...',
+      send: 'Отправить',
       label: 'Новое сообщение',
     },
     modal: {

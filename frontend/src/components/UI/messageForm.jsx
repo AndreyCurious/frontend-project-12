@@ -57,6 +57,7 @@ const MessageForm = () => {
             />
             <button className="btn border-0" type="submit" disabled={!formik.dirty || !formik.isValid}>
               <ArrowRightCircleFill size={30} />
+              <span className="visually-hidden">{t('chatPage.send')}</span>
             </button>
           </div>
         </form>
