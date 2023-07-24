@@ -135,12 +135,14 @@ const RenameChannelForm = ({ closeModal }) => {
   const rollbar = useRollbar();
   const inputRef = useRef(null);
   const id = useSelector((state) => state.modalData.channelId);
+  const channelActive = useSelector((state) => state.channelsData.channels
+    .find((channel) => channel.id === id));
   const channels = useSelector((state) => state.channelsData.channels);
   const channelsNames = channels.map((channel) => channel.name);
   const { t } = useTranslation();
   const formik = useFormik({
     initialValues: {
-      nameChannel: '',
+      nameChannel: channelActive.name,
     },
     validationSchema: getValidationSchema(channelsNames, t),
     onSubmit: async (values) => {
@@ -156,7 +158,10 @@ const RenameChannelForm = ({ closeModal }) => {
   });
 
   useEffect(() => {
-    inputRef.current.focus();
+    setTimeout(() => {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }, 0);
   }, []);
 
   return (
@@ -175,7 +180,7 @@ const RenameChannelForm = ({ closeModal }) => {
               required
               onChange={formik.handleChange}
               name="nameChannel"
-              value={formik.nameChannel}
+              value={formik.values.nameChannel}
               isInvalid={!!formik.errors.nameChannel}
             />
             <label className="visually-hidden" htmlFor="nameChannel">{t('modal.channelName')}</label>
