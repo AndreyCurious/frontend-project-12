@@ -26,11 +26,11 @@ export default {
       addChannel: 'Добавить канал',
       channelName: 'Имя канала',
       close: 'Отменить',
-      add: 'Добавить',
+      add: 'Отправить',
       removeChannel: 'Удалить канал',
       removeQuestion: 'Вы действительно хотите удалить канал?',
       remove: 'Удалить',
-      rename: 'Новое имя канала',
+      rename: 'Переименовать канал',
     },
     errors: {
       required: 'Заполните поле',
