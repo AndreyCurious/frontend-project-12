@@ -25,7 +25,7 @@ export default {
     modal: {
       addChannel: 'Добавить канал',
       channelName: 'Имя канала',
-      close: 'Закрыть',
+      close: 'Отменить',
       add: 'Добавить',
       removeChannel: 'Удалить канал',
       removeQuestion: 'Вы действительно хотите удалить канал?',
