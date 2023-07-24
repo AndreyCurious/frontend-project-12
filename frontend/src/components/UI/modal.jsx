@@ -123,7 +123,7 @@ const RemoveChannelForm = ({ closeModal }) => {
         <Button
           variant="danger"
           type="button"
-          onClick={() => removeChannel()}
+          onClick={removeChannel}
         >
           {t('modal.remove')}
         </Button>
