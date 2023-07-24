@@ -52,16 +52,17 @@ const AddChannelForm = ({ closeModal }) => {
             <Form.Control
               ref={inputRef}
               type="text"
-              placeholder={t('modal.channelName')}
               disabled={formik.isSubmitting}
               required
               onChange={formik.handleChange}
               name="nameChannel"
+              id="nameChannel"
               value={formik.nameChannel}
               isInvalid={!!formik.errors.nameChannel}
             />
             <label className="visually-hidden" htmlFor="nameChannel">{t('modal.channelName')}</label>
             <Form.Control.Feedback type="invalid">
+              {console.log(formik.errors.nameChannel)}
               {formik.errors.nameChannel}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end mt-3">
@@ -179,6 +180,7 @@ const RenameChannelForm = ({ closeModal }) => {
               required
               onChange={formik.handleChange}
               name="nameChannel"
+              id="nameChannel"
               value={formik.values.nameChannel}
               isInvalid={formik.touched.nameChannel && !!formik.errors.nameChannel}
             />
