@@ -166,7 +166,7 @@ const RenameChannelForm = ({ closeModal }) => {
 
   return (
     <>
-      <Modal.Header>
+      <Modal.Header closeButton>
         <Modal.Title>{t('modal.rename')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
