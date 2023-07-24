@@ -157,6 +157,13 @@ const RenameChannelForm = ({ closeModal }) => {
     },
   });
 
+  useEffect(() => {
+    setTimeout(() => {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }, 0);
+  }, []);
+
   return (
     <>
       <Modal.Header closeButton>
@@ -168,13 +175,12 @@ const RenameChannelForm = ({ closeModal }) => {
             <Form.Control
               ref={inputRef}
               type="text"
-              placeholder={t('modal.channelName')}
               disabled={formik.isSubmitting}
               required
               onChange={formik.handleChange}
               name="nameChannel"
               value={formik.values.nameChannel}
-              isInvalid={!!formik.errors.nameChannel}
+              isInvalid={formik.touched.nameChannel && !!formik.errors.nameChannel}
             />
             <label className="visually-hidden" htmlFor="nameChannel">{t('modal.channelName')}</label>
             <Form.Control.Feedback type="invalid">
