@@ -58,7 +58,7 @@ export default {
       networkErr: 'Ошибка сети! Попробуйте позже.',
       createChannel: 'Канал создан',
       renameChannel: 'Канал переименован',
-      deleteChannel: 'Канал удален',
+      deleteChannel: 'Канал удалён',
     },
   },
 };
