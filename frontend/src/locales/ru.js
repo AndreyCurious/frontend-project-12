@@ -52,6 +52,7 @@ export default {
       confirmPassword: 'Подтвердите пароль',
       submit: 'Зарегистирироваться',
       required: 'Заполните поле',
+      sameUsers: 'Пользователь с таким именем уже существует!',
     },
     toastify: {
       unknowErr: 'Неизвестная ошибка!',

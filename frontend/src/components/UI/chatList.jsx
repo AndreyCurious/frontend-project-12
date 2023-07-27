@@ -5,7 +5,6 @@ import Channel from './channel';
 const ChatList = () => {
   const channels = useSelector((state) => state.channelsData.channels);
   const currentChannelId = useSelector((state) => state.channelsData.currentChannelId);
-  console.log(useSelector((state) => state));
 
   return (
     <ul className="p-2 pb-0 mb-0 overflow-auto">

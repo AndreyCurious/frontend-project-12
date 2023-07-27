@@ -1,37 +1,37 @@
-/* eslint-disable */
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
-import useAuth from '../../hooks/index.js';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/index.js';
 
 const RegistrationForm = () => {
+  const [signUser, setSignUser] = useState(false);
   const rollbar = useRollbar();
   const auth = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [userAuth, setUserAuth] = useState(false);
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
     onSubmit: async (values) => {
-      setUserAuth(false);
       try {
+        setSignUser(false);
         const response = await axios.post('api/v1/signup', values);
         auth.logIn(response.data);
-        return navigate('/')
+        return navigate('/');
       } catch (e) {
-        rollbar.error(err);
+        rollbar.error(e);
         if (e.response.status === 409) {
-          setUserAuth(true);
+          setSignUser(true);
         } else {
-          console.log(e);
+          toast.error(t('toastify.networkErr'));
         }
       }
       return null;
@@ -43,7 +43,7 @@ const RegistrationForm = () => {
     }),
   });
   return (
-    <Form onSubmit={formik.handleSubmit} className='w-50 align-items-center d-flex flex-column'>
+    <Form onSubmit={formik.handleSubmit} className="w-50 align-items-center d-flex flex-column">
       <h1 className="text-center">{t('signUp.registration')}</h1>
       <Form.Group className="m-2 position-relative form-floating">
         <Form.Control
@@ -66,7 +66,7 @@ const RegistrationForm = () => {
       <Form.Group className="m-2 position-relative form-floating">
         <Form.Control
           type="password"
-          id='password'
+          id="password"
           placeholder={t('signUp.password')}
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
@@ -81,10 +81,10 @@ const RegistrationForm = () => {
           {formik.errors.password}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="m-2 mb-4 position-relative form-floating">
+      <Form.Group className="m-2 position-relative form-floating">
         <Form.Control
           type="password"
-          id='confirmPassword'
+          id="confirmPassword"
           placeholder={t('signUp.confirmPassword')}
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
@@ -99,8 +99,11 @@ const RegistrationForm = () => {
           {formik.errors.confirmPassword}
         </Form.Control.Feedback>
       </Form.Group>
+      {signUser
+        ? <h6 className="text-danger w-50 text-center mb-3" title=""><strong>{t('signUp.sameUsers')}</strong></h6>
+        : <div />}
       <div>
-        <Button variant='outline-primary' type="submit">{t('signUp.submit')}</Button>
+        <Button variant="outline-primary" type="submit">{t('signUp.submit')}</Button>
       </div>
     </Form>
   );

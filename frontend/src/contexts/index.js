@@ -1,5 +1,6 @@
 import { createContext } from 'react';
-/*eslint-disable*/
-const AuthContext = createContext({});
 
-export { AuthContext };
+const AuthContext = createContext({});
+const ApiContext = createContext(null);
+
+export { AuthContext, ApiContext };

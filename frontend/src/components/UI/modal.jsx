@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
 import { closeWindow } from '../../slices/modal';
-import dataProcessing from '../../API/socket.jsx';
+import { useApi } from '../../hooks';
 
 const getValidationSchema = (channels, t) => (
   yup.object({
@@ -16,6 +16,7 @@ const getValidationSchema = (channels, t) => (
 );
 
 const AddChannelForm = ({ closeModal }) => {
+  const api = useApi();
   const rollbar = useRollbar();
   const inputRef = useRef(null);
   const channels = useSelector((state) => state.channelsData.channels);
@@ -28,7 +29,7 @@ const AddChannelForm = ({ closeModal }) => {
     validationSchema: getValidationSchema(channelsNames, t),
     onSubmit: async (values) => {
       try {
-        await dataProcessing('newChannel', { name: values.nameChannel });
+        await api.newChannel({ name: values.nameChannel });
         closeModal();
         toast.success(t('toastify.createChannel'));
       } catch (err) {
@@ -62,7 +63,6 @@ const AddChannelForm = ({ closeModal }) => {
             />
             <label className="visually-hidden" htmlFor="nameChannel">{t('modal.channelName')}</label>
             <Form.Control.Feedback type="invalid">
-              {console.log(formik.errors.nameChannel)}
               {formik.errors.nameChannel}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end mt-3">
@@ -90,12 +90,13 @@ const AddChannelForm = ({ closeModal }) => {
 };
 
 const RemoveChannelForm = ({ closeModal }) => {
+  const api = useApi();
   const rollbar = useRollbar();
   const { t } = useTranslation();
   const id = useSelector((state) => state.modalData.channelId);
   const removeChannel = async () => {
     try {
-      dataProcessing('removeChannel', { id });
+      api.removeChannel({ id });
       closeModal();
       toast.success(t('toastify.deleteChannel'));
     } catch (err) {
@@ -133,6 +134,7 @@ const RemoveChannelForm = ({ closeModal }) => {
 };
 
 const RenameChannelForm = ({ closeModal }) => {
+  const api = useApi();
   const rollbar = useRollbar();
   const inputRef = useRef(null);
   const id = useSelector((state) => state.modalData.channelId);
@@ -148,7 +150,7 @@ const RenameChannelForm = ({ closeModal }) => {
     validationSchema: getValidationSchema(channelsNames, t),
     onSubmit: async (values) => {
       try {
-        await dataProcessing('renameChannel', { name: values.nameChannel, id });
+        await api.renameChannel({ name: values.nameChannel, id });
         closeModal();
         toast.success(t('toastify.renameChannel'));
       } catch (err) {

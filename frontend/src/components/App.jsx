@@ -14,7 +14,7 @@ import NotFoundPage from './NotFoundPage.jsx';
 import PageChat from './PageChat.jsx';
 
 import { AuthContext } from '../contexts/index.js';
-import useAuth from '../hooks/index.js';
+import { useAuth } from '../hooks/index.js';
 import Navbar from './UI/navbar.jsx';
 import Signup from './SignUp.jsx';
 

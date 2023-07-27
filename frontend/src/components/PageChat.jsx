@@ -1,25 +1,22 @@
-/* eslint-disable */
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { setStateChannels } from '../slices/channels';
-import useAuth from '../hooks';
+import { useAuth } from '../hooks';
 import MessageForm from './UI/messageForm';
 import ChatList from './UI/chatList';
 import AddChannelButton from './UI/addChannelBtn';
 import Modal from './UI/modal';
 
-const Message = ({ name, msg }) => {
-  return (
-    <div className="text-break mb-2">
-      <b>{name}</b>
-      {': '}
-      {msg}
-    </div>
-  );
-};
+const Message = ({ name, msg }) => (
+  <div className="text-break mb-2">
+    <b>{name}</b>
+    {': '}
+    {msg}
+  </div>
+);
 
 const PageChat = () => {
   const { t } = useTranslation();
@@ -81,7 +78,9 @@ const PageChat = () => {
                       />
                     ))}
                   </div>
-                  <MessageForm />
+                  <div className="mt-auto px-5 py-3">
+                    <MessageForm />
+                  </div>
                 </div>
               </div>
             </div>
