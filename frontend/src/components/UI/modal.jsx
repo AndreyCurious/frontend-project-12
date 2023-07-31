@@ -8,14 +8,22 @@ import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
 import { closeWindow } from '../../slices/modal';
 import { useApi } from '../../hooks';
+import { setCurrenChannelId } from '../../slices/channels';
 
 const getValidationSchema = (channels, t) => (
   yup.object({
-    nameChannel: yup.string().trim().required(t('errors.required')).notOneOf(channels, t('errors.twiceChannels')),
+    nameChannel: yup
+      .string()
+      .trim()
+      .required(t('errors.required'))
+      .notOneOf(channels, t('errors.twiceChannels'))
+      .min(3, t('signUp.minName'))
+      .max(20, t('signUp.maxName')),
   })
 );
 
 const AddChannelForm = ({ closeModal }) => {
+  const dispatch = useDispatch();
   const api = useApi();
   const rollbar = useRollbar();
   const inputRef = useRef(null);
@@ -29,7 +37,11 @@ const AddChannelForm = ({ closeModal }) => {
     validationSchema: getValidationSchema(channelsNames, t),
     onSubmit: async (values) => {
       try {
-        await api.newChannel({ name: values.nameChannel });
+        console.log(await api.newChannel({ name: values.nameChannel }));
+        const data = await api.newChannel({ name: values.nameChannel });
+        dispatch(setCurrenChannelId({
+          channelId: data.id,
+        }));
         closeModal();
         toast.success(t('toastify.createChannel'));
       } catch (err) {

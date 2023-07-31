@@ -14,7 +14,7 @@ const Channel = ({ channel, currentChannelId }) => {
         ? (
           <Dropdown className="w-100" as={ButtonGroup}>
             <Button
-              className={channel.id === currentChannelId ? 'btn w-100 text-start rounded-0 btn-secondary' : 'btn w-100 text-start rounded-0'}
+              className={channel.id === currentChannelId ? 'btn w-100 text-start rounded-0 btn-secondary text-truncate' : 'btn w-100 text-start rounded-0 text-truncate'}
               key={channel.id}
               variant={null}
               onClick={() => dispatch(setCurrenChannelId({ channelId: channel.id }))}

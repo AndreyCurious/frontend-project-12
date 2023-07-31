@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import EnterForm from './UI/enterForm';
 
 const Login = () => {
@@ -18,7 +19,7 @@ const Login = () => {
             <div className="card-footer text-center p-4">
               <div className="">
                 <span className="p-2">{t('login.newToChat')}</span>
-                <a href="/signup">{t('login.signup')}</a>
+                <Link to="/signup">{t('login.signup')}</Link>
               </div>
             </div>
           </div>

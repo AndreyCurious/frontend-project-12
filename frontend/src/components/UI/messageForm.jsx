@@ -24,8 +24,7 @@ const MessageForm = () => {
       const filtredMsg = leoProfanity.clean(values.message);
       try {
         await api.newMessage({ name: auth.user, msg: filtredMsg, currentChannelId });
-        inputRef.current.focus();
-        inputRef.current.value = '';
+        formik.values.message = '';
       } catch (err) {
         rollbar.error(err);
         console.log(err);
@@ -38,7 +37,7 @@ const MessageForm = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-  }, [currentChannelId]);
+  }, [currentChannelId, formik.values.message]);
 
   return (
     <Form onSubmit={formik.handleSubmit}>
@@ -53,7 +52,7 @@ const MessageForm = () => {
           disabled={formik.isSubmitting}
           className="p-0 ps-2"
           onChange={formik.handleChange}
-          value={formik.message}
+          value={formik.values.message}
         />
         <button className="btn border-0" type="submit" disabled={!formik.dirty || !formik.isValid}>
           <ArrowRightCircleFill size={30} />

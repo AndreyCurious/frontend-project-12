@@ -11,7 +11,6 @@ import {
   addChannel,
   removeChannel,
   renameChannel,
-  setCurrenChannelId,
 } from './slices/channels.jsx';
 import { addMessage } from './slices/messages';
 
@@ -27,7 +26,6 @@ const RollbarProvider = ({ children }) => (
     </ErrorBoundary>
   </RollbarProv>
 );
-
 const init = async (socket) => {
   const api = {
     newMessage: (...args) => socket.emit('newMessage', ...args, (response) => {
@@ -35,10 +33,13 @@ const init = async (socket) => {
         console.error();
       }
     }),
-    newChannel: (...args) => socket.emit('newChannel', ...args, (response) => {
-      if (response.status !== 'ok') {
-        console.error();
-      }
+    newChannel: (...args) => new Promise((resolve, reject) => {
+      socket.emit('newChannel', ...args, (response) => {
+        if (response.status !== 'ok') {
+          reject();
+        }
+        resolve(response.data);
+      });
     }),
     removeChannel: (...args) => socket.emit('removeChannel', ...args, (response) => {
       if (response.status !== 'ok') {
@@ -61,9 +62,6 @@ const init = async (socket) => {
   socket.on('newChannel', (response) => {
     store.dispatch(addChannel({
       channel: response,
-    }));
-    store.dispatch(setCurrenChannelId({
-      channelId: response.id,
     }));
   });
 

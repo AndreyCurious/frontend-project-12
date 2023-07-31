@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -19,10 +19,33 @@ const Message = ({ name, msg }) => (
 );
 
 const PageChat = () => {
+  const refChannels = useRef(null);
+  const inputRefMsg = useRef(null);
   const { t } = useTranslation();
   const auth = useAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const msgs = useSelector((state) => state.messagesData.messages);
+  const chnl = useSelector((state) => state.channelsData.channels);
+
+  const messagesCurrentChat = useSelector((state) => {
+    const { currentChannelId } = state.channelsData;
+    const { messages } = state.messagesData;
+    const result = messages
+      .filter((message) => Number(message.currentChannelId) === Number(currentChannelId));
+    return result;
+  });
+
+  const scrollToMyMsgRef = () => {
+    inputRefMsg.current.scrollTo(0, inputRefMsg.current.scrollHeight);
+  };
+  const scrollToMyChnlRef = () => {
+    refChannels.current.scrollTo(0, refChannels.current.scrollHeight);
+  };
+  useEffect(() => {
+    scrollToMyMsgRef();
+    scrollToMyChnlRef();
+  }, [msgs, chnl]);
 
   useEffect(() => {
     /* eslint-disable */
@@ -39,13 +62,6 @@ const PageChat = () => {
     };
     getData();
   }, [navigate, dispatch, auth]);
-
-  const messagesCurrentChat = useSelector((state) => {
-    const { currentChannelId } = state.channelsData;
-    const { messages } = state.messagesData;
-    const result = messages.filter((message) => Number(message.currentChannelId) === Number(currentChannelId));
-    return result;
-  })
   
   /* eslint-enable */
   return (
@@ -62,14 +78,14 @@ const PageChat = () => {
                     <AddChannelButton />
                   </div>
                   <hr className="p-0 m-0" />
-                  <div className="flex-column overflow-auto">
+                  <div className="flex-column overflow-auto" ref={refChannels}>
                     <ChatList />
                   </div>
                 </div>
               </div>
               <div className="col h-100">
                 <div className="d-flex flex-column h-100">
-                  <div className="overflow-auto px-5 mt-4">
+                  <div className="overflow-auto px-5 mt-4" ref={inputRefMsg}>
                     {messagesCurrentChat.map(({ name, msg, id }) => (
                       <Message
                         key={id}
