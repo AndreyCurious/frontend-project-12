@@ -37,7 +37,6 @@ const AddChannelForm = ({ closeModal }) => {
     validationSchema: getValidationSchema(channelsNames, t),
     onSubmit: async (values) => {
       try {
-        console.log(await api.newChannel({ name: values.nameChannel }));
         const data = await api.newChannel({ name: values.nameChannel });
         dispatch(setCurrenChannelId({
           channelId: data.id,
