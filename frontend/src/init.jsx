@@ -26,31 +26,22 @@ const RollbarProvider = ({ children }) => (
     </ErrorBoundary>
   </RollbarProv>
 );
+
 const init = async (socket) => {
+  const withPromise = (operation, ...args) => new Promise((resolve, reject) => {
+    socket.emit(operation, ...args, (response) => {
+      if (response.status !== 'ok') {
+        reject();
+      }
+      resolve(response.data);
+    });
+  });
+
   const api = {
-    newMessage: (...args) => socket.emit('newMessage', ...args, (response) => {
-      if (response.status !== 'ok') {
-        console.error();
-      }
-    }),
-    newChannel: (...args) => new Promise((resolve, reject) => {
-      socket.emit('newChannel', ...args, (response) => {
-        if (response.status !== 'ok') {
-          reject();
-        }
-        resolve(response.data);
-      });
-    }),
-    removeChannel: (...args) => socket.emit('removeChannel', ...args, (response) => {
-      if (response.status !== 'ok') {
-        console.error();
-      }
-    }),
-    renameChannel: (...args) => socket.emit('renameChannel', ...args, (response) => {
-      if (response.status !== 'ok') {
-        console.error();
-      }
-    }),
+    newMessage: (...args) => withPromise('newMessage', ...args),
+    newChannel: (...args) => withPromise('newChannel', ...args),
+    removeChannel: (...args) => withPromise('removeChannel', ...args),
+    renameChannel: (...args) => withPromise('renameChannel', ...args),
   };
 
   socket.on('newMessage', (response) => {

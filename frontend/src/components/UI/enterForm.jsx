@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useAuth } from '../../hooks/index.js';
+import routes from '../../routes.js';
 
 const EnterForm = () => {
   const rollbar = useRollbar();
@@ -23,9 +24,9 @@ const EnterForm = () => {
     onSubmit: async (values) => {
       setUserAuth(false);
       try {
-        const response = await axios.post('api/v1/login', values);
+        const response = await axios.post(routes.axiosLogin(), values);
         auth.logIn(response.data);
-        return navigate('/');
+        return navigate(routes.chat());
       } catch (e) {
         rollbar.error(e);
         if (e.response.status === 401) {

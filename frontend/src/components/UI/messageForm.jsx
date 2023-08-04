@@ -27,7 +27,7 @@ const MessageForm = () => {
         formik.values.message = '';
       } catch (err) {
         rollbar.error(err);
-        console.log(err);
+        console.error(err);
       }
     },
     validationSchema: yup.object({

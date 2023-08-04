@@ -45,7 +45,7 @@ const AddChannelForm = ({ closeModal }) => {
         toast.success(t('toastify.createChannel'));
       } catch (err) {
         rollbar.error(err);
-        console.log(err);
+        console.error(err);
       }
     },
   });
@@ -112,7 +112,7 @@ const RemoveChannelForm = ({ closeModal }) => {
       toast.success(t('toastify.deleteChannel'));
     } catch (err) {
       rollbar.error(err);
-      console.log(err);
+      console.error(err);
     }
   };
   return (
@@ -166,7 +166,7 @@ const RenameChannelForm = ({ closeModal }) => {
         toast.success(t('toastify.renameChannel'));
       } catch (err) {
         rollbar.error(err);
-        console.log(err);
+        console.error(err);
       }
     },
   });

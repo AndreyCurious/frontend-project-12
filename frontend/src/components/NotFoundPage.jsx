@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import routes from '../routes';
 
 const NotFoundPage = () => {
   const { t } = useTranslation();
@@ -12,7 +14,7 @@ const NotFoundPage = () => {
       </h1>
       <p className="text-muted mb-5">
         {t('notFound.transition')}
-        <a href="/login">{t('notFound.mainPage')}</a>
+        <Link href={routes.login()}>{t('notFound.mainPage')}</Link>
       </p>
     </div>
   );

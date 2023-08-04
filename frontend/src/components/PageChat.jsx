@@ -54,10 +54,10 @@ const PageChat = () => {
         const res = await axios.get('api/v1/data', { headers: auth.getAuthData() });
         dispatch(setStateChannels(res.data));
       } catch (e) {
-        if (e.response.status === 401) {
+        if (e.response.status === 401 || e.response.status === 500 || e.isAxiosError) {
           return navigate('/login');
         }
-        console.log(e);
+        console.error(e);
       }
     };
     getData();

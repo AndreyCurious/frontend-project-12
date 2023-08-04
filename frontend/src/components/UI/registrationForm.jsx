@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/index.js';
+import routes from '../../routes.js';
 
 const RegistrationForm = () => {
   const [signUser, setSignUser] = useState(false);
@@ -23,9 +24,9 @@ const RegistrationForm = () => {
     onSubmit: async (values) => {
       try {
         setSignUser(false);
-        const response = await axios.post('api/v1/signup', values);
+        const response = await axios.post(routes.axiosSignup(), values);
         auth.logIn(response.data);
-        return navigate('/');
+        return navigate(routes.chat());
       } catch (e) {
         rollbar.error(e);
         if (e.response.status === 409) {
