@@ -9,6 +9,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-
+    - name: install
+      run: make install
     - name: run linter
       run: make lint-frontend 
