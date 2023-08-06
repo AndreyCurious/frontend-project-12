@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useRollbar } from '@rollbar/react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import * as yup from 'yup';
@@ -12,7 +11,6 @@ import routes from '../../routes.js';
 
 const RegistrationForm = () => {
   const [signUser, setSignUser] = useState(false);
-  const rollbar = useRollbar();
   const auth = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -28,7 +26,6 @@ const RegistrationForm = () => {
         auth.logIn(response.data);
         return navigate(routes.chat());
       } catch (e) {
-        rollbar.error(e);
         if (e.response.status === 409) {
           setSignUser(true);
         } else {
@@ -94,6 +91,7 @@ const RegistrationForm = () => {
           name="confirmPassword"
           value={formik.confirmPassword}
           isInvalid={!!formik.errors.confirmPassword && formik.touched.confirmPassword}
+          className="mb-2"
         />
         <label htmlFor="confirmPassword">{t('signUp.confirmPassword')}</label>
         <Form.Control.Feedback tooltip type="invalid">

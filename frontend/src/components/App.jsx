@@ -17,6 +17,7 @@ import AuthProvider from './provider/authProvider.jsx';
 import { useAuth } from '../hooks/index.js';
 import Navbar from './UI/navbar.jsx';
 import Signup from './SignUp.jsx';
+import routes from '../routes.js';
 
 const PrivateOutlet = () => {
   const auth = useAuth();
@@ -29,10 +30,10 @@ const App = () => (
       <div className="d-flex flex-column bg-light vh-100">
         <Navbar />
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path={routes.login()} element={<Login />} />
           <Route path="*" element={<NotFoundPage />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<PrivateOutlet />}>
+          <Route path={routes.signup()} element={<Signup />} />
+          <Route path={routes.chat()} element={<PrivateOutlet />}>
             <Route path="" element={<PageChat />} />
           </Route>
         </Routes>

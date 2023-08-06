@@ -9,6 +9,7 @@ import MessageForm from './UI/messageForm';
 import ChatList from './UI/chatList';
 import AddChannelButton from './UI/addChannelBtn';
 import Modal from './UI/modal';
+import routes from '../routes';
 
 const Message = ({ name, msg }) => (
   <div className="text-break mb-2">
@@ -27,9 +28,9 @@ const PageChat = () => {
   const navigate = useNavigate();
   const msgs = useSelector((state) => state.messagesData.messages);
   const chnl = useSelector((state) => state.channelsData.channels);
+  const currentChannelId = useSelector((state) => state.channelsData.currentChannelId);
 
   const messagesCurrentChat = useSelector((state) => {
-    const { currentChannelId } = state.channelsData;
     const { messages } = state.messagesData;
     const result = messages
       .filter((message) => Number(message.currentChannelId) === Number(currentChannelId));
@@ -42,20 +43,25 @@ const PageChat = () => {
   const scrollToMyChnlRef = () => {
     refChannels.current.scrollTo(0, refChannels.current.scrollHeight);
   };
+
   useEffect(() => {
     scrollToMyMsgRef();
+  }, [msgs, currentChannelId]);
+
+  useEffect(() => {
     scrollToMyChnlRef();
-  }, [msgs, chnl]);
+  }, [chnl]);
 
   useEffect(() => {
     /* eslint-disable */
     const getData = async () => {
       try {
-        const res = await axios.get('api/v1/data', { headers: auth.getAuthData() });
+        const tokenWithHeader = { Authorization: `Bearer ${auth.getAuthData()}` };
+        const res = await axios.get(routes.axiosData(), { headers: tokenWithHeader });
         dispatch(setStateChannels(res.data));
       } catch (e) {
         if (e.response.status === 401 || e.response.status === 500 || e.isAxiosError) {
-          return navigate('/login');
+          return navigate(routes.login());
         }
         console.error(e);
       }
@@ -71,7 +77,7 @@ const PageChat = () => {
         <div className="row justify-content-center h-100">
           <div className="row justify-content-center align-content-center h-100">
             <div className="row col-xxl-8 h-100 shadow bg-white border border-primary rounded d-flex p-0">
-              <div className="col-4 border-end bg-light p-0 h-100">
+              <div className="col-3 border-end bg-light p-0 h-100">
                 <div className="d-flex flex-column h-100">
                   <div className="p-3 ms-3 d-flex justify-content-between">
                     <b>{t('chatPage.channels')}</b>

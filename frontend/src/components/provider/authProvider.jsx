@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
 
     const getAuthData = () => {
       const userCurToken = localStorage.getItem('token');
-      return userCurToken ? { Authorization: `Bearer ${userCurToken}` } : {};
+      return userCurToken;
     };
 
     return {

@@ -45,7 +45,7 @@ const EnterForm = () => {
   });
 
   return (
-    <Form onSubmit={formik.handleSubmit}>
+    <Form onSubmit={formik.handleSubmit} className="col-md-5">
       <h1 className="text-center mb-4">{t('login.header')}</h1>
       <Form.Group className="form-floating">
         <Form.Control
@@ -83,7 +83,7 @@ const EnterForm = () => {
         {t('login.submit')}
       </Button>
       {userAuth
-        ? <h6 className="text-danger" title=""><strong>{t('login.authFailed')}</strong></h6>
+        ? <h6 className="text-danger text-center" title=""><strong>{t('login.authFailed')}</strong></h6>
         : <div className="p-4" />}
     </Form>
   );

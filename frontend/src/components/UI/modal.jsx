@@ -5,7 +5,6 @@ import { Modal, Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { useRollbar } from '@rollbar/react';
 import { closeWindow } from '../../slices/modal';
 import { useApi } from '../../hooks';
 import { setCurrenChannelId } from '../../slices/channels';
@@ -25,7 +24,6 @@ const getValidationSchema = (channels, t) => (
 const AddChannelForm = ({ closeModal }) => {
   const dispatch = useDispatch();
   const api = useApi();
-  const rollbar = useRollbar();
   const inputRef = useRef(null);
   const channels = useSelector((state) => state.channelsData.channels);
   const channelsNames = channels.map((channel) => channel.name);
@@ -44,7 +42,6 @@ const AddChannelForm = ({ closeModal }) => {
         closeModal();
         toast.success(t('toastify.createChannel'));
       } catch (err) {
-        rollbar.error(err);
         console.error(err);
       }
     },
@@ -102,7 +99,6 @@ const AddChannelForm = ({ closeModal }) => {
 
 const RemoveChannelForm = ({ closeModal }) => {
   const api = useApi();
-  const rollbar = useRollbar();
   const { t } = useTranslation();
   const id = useSelector((state) => state.modalData.channelId);
   const removeChannel = async () => {
@@ -111,7 +107,6 @@ const RemoveChannelForm = ({ closeModal }) => {
       closeModal();
       toast.success(t('toastify.deleteChannel'));
     } catch (err) {
-      rollbar.error(err);
       console.error(err);
     }
   };
@@ -146,7 +141,6 @@ const RemoveChannelForm = ({ closeModal }) => {
 
 const RenameChannelForm = ({ closeModal }) => {
   const api = useApi();
-  const rollbar = useRollbar();
   const inputRef = useRef(null);
   const id = useSelector((state) => state.modalData.channelId);
   const channelActive = useSelector((state) => state.channelsData.channels
@@ -165,7 +159,6 @@ const RenameChannelForm = ({ closeModal }) => {
         closeModal();
         toast.success(t('toastify.renameChannel'));
       } catch (err) {
-        rollbar.error(err);
         console.error(err);
       }
     },
