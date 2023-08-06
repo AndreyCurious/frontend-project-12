@@ -21,7 +21,7 @@ import routes from '../routes.js';
 
 const PrivateOutlet = () => {
   const auth = useAuth();
-  return auth.user ? <Outlet /> : <Navigate to="/login" />;
+  return auth.user ? <Outlet /> : <Navigate to={routes.login()} />;
 };
 
 const App = () => (
