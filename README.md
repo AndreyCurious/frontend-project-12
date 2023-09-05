@@ -2,7 +2,7 @@
 [![Actions Status](https://github.com/AndreyCurious/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/AndreyCurious/frontend-project-12/actions)
 
 ## Digital Chat 
-Is place where you can chat with your friends or colleagaues!
+This is place where you can chat with your friends or colleagaues!
 
 ## System requirements
 node  js v18 +
